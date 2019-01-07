@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameViewController: UIViewController {
     
@@ -19,21 +20,18 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
+        let skView = view as? SKView
+        
+        let scene: SKScene = GameStartScene(size: skView!.bounds.size)
+//        skView!.showsFPS=true
+//        skView!.showsNodeCount=true
+//        skView!.showsDrawCount=true
+//        skView!.showsQuadCount=true
+//        skView!.showsPhysics=true
+        try! AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+        try! AVAudioSession.sharedInstance().setActive(true)
+        
+        skView!.presentScene(scene)
     }
 
     override var shouldAutorotate: Bool {
